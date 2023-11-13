@@ -158,7 +158,6 @@ button {
     padding: 1rem clamp(1rem, 6vh, 3rem);
     font-size: clamp(1rem, 2.5vw, 2rem);
     border-radius: .4rem;
-    margin: 1rem 0;
     user-select: none;
 }
 
@@ -182,9 +181,10 @@ button.pressed {
 /* container */
 .container {
     display: flex;
-    align-items: center;
     width: 100%;
     height: 100%;
+    flex-direction: column;
+    align-items: normal;
 }
 
 
@@ -210,14 +210,14 @@ button.pressed {
 
 .container .buttons {
     display: flex;
-    flex-direction: column;
-    justify-content: end;
-    padding: 0 3rem;
-    border: 0px solid green;
+    border: 0px solid green; 
+    padding: 0 2rem;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .container .joystick #joystick-canvas {
-    width: 80%;
+    width: 70%;
     aspect-ratio: 1/1;
 }
 
@@ -230,26 +230,55 @@ button.pressed {
     color: blue;
 }
 
-@media (max-width: 800px) {
+
+@media (min-width: 650px) {
+    button {
+        margin: 1rem 0;
+    }
     .container {
+        align-items: center;
+        flex-direction: row;
+    }
+    .container .buttons {
+        padding: 0 2rem;
         flex-direction: column;
-        align-items: normal;
+        justify-content: end;
     }
     .container .video {
-        order: 1;
+        order: 2;
     }
     .container .joystick {
-        order: 2;
+        order: 1;
     }
     .container .buttons {
         order: 3;
+    }
+    .container .video img {
+        min-width: 300px;
+    }
+    .container .joystick #joystick-canvas {
+        width: 100%;
+    }
+}
+
+@media (min-width: 750px) {
+    .container .video img {
+        min-width: 350px;
+    }
+    .container .buttons {
         padding: 0 2rem;
+    }
+}
+
+@media (min-width: 800px) {
+    .container .joystick {
+        width: 80%;
     }
 }
 
 @media (min-width: 1000px) {
     .container .buttons {
-        padding: 0 5rem;
+        padding: 0 4rem;
     }
 }
 </style>
@@ -270,11 +299,11 @@ button.pressed {
 <section class="debug"></section>
 
 <section class="container">
-    <div class="joystick">
-        <div id="joystick-canvas"></div>
-    </div>
     <div class="video">
        <img id="stream" src="">
+    </div>
+    <div class="joystick">
+        <div id="joystick-canvas"></div>
     </div>
     <div class="buttons">
         <button type="button" id="button-a">LED</button>

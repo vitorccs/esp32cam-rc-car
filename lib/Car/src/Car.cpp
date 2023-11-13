@@ -7,13 +7,16 @@
 
 Car::Car(DCMotor &m1,
          DCMotor &m2,
-         DigitalLed &fLed) : motor1(m1),
-                             motor2(m2),
-                             frontLed(fLed)
+         DigitalLed &fLed,
+         DigitalLed &camLed) : motor1(m1),
+                               motor2(m2),
+                               frontLed(fLed),
+                               cameraLed(camLed)
 {
     this->motor1 = m1;
     this->motor2 = m2;
     this->frontLed = fLed;
+    this->cameraLed = camLed;
 }
 
 void Car::backward(uint8_t speed)
@@ -87,6 +90,16 @@ void Car::frontLightsOff()
 void Car::frontLightsOn()
 {
     this->frontLed.turnOn();
+}
+
+void Car::camLedOff()
+{
+    this->cameraLed.turnOff();
+}
+
+void Car::camLedOn()
+{
+    this->cameraLed.turnOn();
 }
 
 void Car::setMinAbsSpeed(uint8_t absSpeed)

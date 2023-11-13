@@ -11,7 +11,8 @@
 #define WIFI_SSID "Athena"
 #define WIFI_PWD "washington"
 #define JOYSTICK_DEBUG true
-#define PIN_FLED 4
+#define PIN_FRONT_LED 2
+#define PIN_CAMERA_LED 4
 #define PIN_M1_IN1 14
 #define PIN_M1_IN2 15
 #define PIN_M2_IN1 13
@@ -21,8 +22,9 @@
 // Car components
 DCMotor motor1(PIN_M1_IN1, PIN_M1_IN2);
 DCMotor motor2(PIN_M2_IN1, PIN_M2_IN2);
-DigitalLed fLed(PIN_FLED);
-Car car(motor1, motor2, fLed);
+DigitalLed frontLed(PIN_FRONT_LED);
+DigitalLed camLed(PIN_CAMERA_LED);
+Car car(motor1, motor2, frontLed, camLed);
 
 // Handlers
 WifiHandler wifiHandler;
@@ -57,13 +59,19 @@ void setup()
     webJoystickHandler.handle(coords);
   };
 
-  ButtonAToggleHandlerFunction buttonAHandler = [&](bool toggle)
+  ButtonToggleHandlerFunction buttonAHandler = [&](bool toggle)
+  {
+    webJoystickHandler.toggleCamLed(toggle);
+  };
+
+  ButtonToggleHandlerFunction buttonBHandler = [&](bool toggle)
   {
     webJoystickHandler.toggleFrontLights(toggle);
   };
 
   socketServer.init(coordsHandler,
-                    buttonAHandler);
+                    buttonAHandler,
+                    buttonBHandler);
 }
 
 void loop()

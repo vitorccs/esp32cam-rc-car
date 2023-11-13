@@ -9,6 +9,7 @@ public:
     WebJoystickHandler(Car &car);
     void handle(JoyCoords coords);
     void toggleFrontLights(bool enable);
+    void toggleCamLed(bool enable);
     void setDebug(bool enable);
 private:
     Car &_car;

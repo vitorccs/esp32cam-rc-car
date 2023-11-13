@@ -6,6 +6,7 @@
 SocketServer::SocketServer() : webSocket(82)
 {
     ALIAS_BUTTON_A = "button-a";
+    ALIAS_BUTTON_B = "button-b";
     ALIAS_DIRECTION = "direction";
     ALIAS_SPEED = "speed";
 
@@ -34,8 +35,7 @@ void SocketServer::onEvent(uint8_t num,
         Serial.printf("[%u] Connected!\n", num);
         break;
     case WStype_TEXT:
-        Serial.print("Data received: ");
-        Serial.println((char *)payload);
+        handleWebSocketMessage((char *)payload);
         break;
     case WStype_BIN:
     case WStype_ERROR:
@@ -48,21 +48,24 @@ void SocketServer::onEvent(uint8_t num,
 }
 
 void SocketServer::init(CoordsHandlerFunction coordsHandler,
-                        ButtonAToggleHandlerFunction buttonAHandler)
+                        ButtonToggleHandlerFunction buttonAHandler,
+                        ButtonToggleHandlerFunction buttonBHandler)
 {
     _coordsHandler = coordsHandler;
     _buttonAHandler = buttonAHandler;
+    _buttonBHandler = buttonBHandler;
 
     webSocket.begin();
 }
 
-void SocketServer::handleWebSocketMessage(char *dataChar) {
-
-    const bool isMovCoords = strstr(dataChar, ALIAS_SPEED) != nullptr;
-    const bool isMovCoords2 = strstr(dataChar, ALIAS_DIRECTION) != nullptr;
+void SocketServer::handleWebSocketMessage(char *dataChar)
+{
+    const bool isMovCoords = strstr(dataChar, ALIAS_SPEED) != nullptr &&
+                             strstr(dataChar, ALIAS_DIRECTION) != nullptr;
     const bool isButtonA = strstr(dataChar, ALIAS_BUTTON_A) != nullptr;
+    const bool isButtonB = strstr(dataChar, ALIAS_BUTTON_B) != nullptr;
 
-    if (isMovCoords && isMovCoords2)
+    if (isMovCoords)
     {
         // parse string as a two-members JSON
         const int jsonSize = JSON_OBJECT_SIZE(2);
@@ -76,9 +79,7 @@ void SocketServer::handleWebSocketMessage(char *dataChar) {
 
         JoyCoords coords;
         coords.speed = json[ALIAS_SPEED];
-        // coords.direction = String(json[ALIAS_DIRECTION]);
-        coords.direction = "N";
-        Serial.println("Aqui");
+        coords.direction = String(json[ALIAS_DIRECTION].as<const char *>());
 
         _coordsHandler(coords);
 
@@ -102,7 +103,24 @@ void SocketServer::handleWebSocketMessage(char *dataChar) {
 
         return;
     }
-    
+
+    if (isButtonB)
+    {
+        const int jsonSize = JSON_OBJECT_SIZE(1);
+        StaticJsonDocument<jsonSize> json;
+        DeserializationError error = deserializeJson(json, dataChar);
+
+        if (error)
+        {
+            return;
+        }
+
+        const bool enabled = json[ALIAS_BUTTON_B];
+
+        _buttonBHandler(enabled);
+
+        return;
+    }
 }
 
 void SocketServer::loop()

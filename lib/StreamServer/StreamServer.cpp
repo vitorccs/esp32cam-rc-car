@@ -192,11 +192,12 @@ button.pressed {
 
 .container .video {
     background: #111;
+    width: 100%;
 }
 
 .container .video img {
-    width: 100vw;
-    max-width: clamp(100%, 640px, 100%);
+    width: 100%;
+    min-width: 350px;
     aspect-ratio: 4 / 3;
 }
 
@@ -211,7 +212,7 @@ button.pressed {
     display: flex;
     flex-direction: column;
     justify-content: end;
-    padding: 0 5rem;
+    padding: 0 3rem;
     border: 0px solid green;
 }
 
@@ -220,13 +221,16 @@ button.pressed {
     aspect-ratio: 1/1;
 }
 
-
 /* buttons container */
 .buttons button.pressed:nth-child(1) {
     color: yellow;
 }
 
-@media (max-width: 700px) {
+.buttons button.pressed:nth-child(2) {
+    color: blue;
+}
+
+@media (max-width: 800px) {
     .container {
         flex-direction: column;
         align-items: normal;
@@ -239,6 +243,13 @@ button.pressed {
     }
     .container .buttons {
         order: 3;
+        padding: 0 2rem;
+    }
+}
+
+@media (min-width: 1000px) {
+    .container .buttons {
+        padding: 0 5rem;
     }
 }
 </style>
@@ -266,7 +277,8 @@ button.pressed {
        <img id="stream" src="">
     </div>
     <div class="buttons">
-        <button type="button" id="button-a">Lights</button>
+        <button type="button" id="button-a">LED</button>
+        <button type="button" id="button-b">Lights</button>
     </div>
 </section>
 
@@ -373,17 +385,23 @@ class MessageSender {
     constructor(socketClient, 
                 joystick, 
                 buttonASel, 
-                buttonBSel,
-                buttonCSel) {
+                buttonBSel) {
         this.socketClient = socketClient;
         this.joystick = joystick;
         this.buttonA = new ToggleButton(buttonASel, (value) => this.sendButtonA(value));
+        this.buttonB = new ToggleButton(buttonBSel, (value) => this.sendButtonB(value));
 
         window.setInterval(() => this.sendJoystick(), 50)
     }
 
     sendButtonA(value) {
         const params = { 'button-a': value };
+
+        this.socketClient.send(params);
+    }
+    
+    sendButtonB(value) {
+        const params = { 'button-b': value };
 
         this.socketClient.send(params);
     }
@@ -428,7 +446,8 @@ window.addEventListener('load', () => {
     const messageSender = new MessageSender(
         socketClient,
         joystick,
-        '#button-a'
+        '#button-a',
+        '#button-b'
     );
     const videoStream = new VideoStream(
       '#stream',

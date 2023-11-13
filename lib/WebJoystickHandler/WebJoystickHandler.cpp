@@ -18,7 +18,7 @@ void WebJoystickHandler::handle(JoyCoords coords)
     const String direction = coords.direction;
     const int16_t speed = coords.speed;
 
-    if (direction == "N")
+    if (coords.direction == "N")
     {
         debugMovement(coords, "Forward");
         this->_car.forward(speed);
@@ -90,7 +90,20 @@ void WebJoystickHandler::toggleFrontLights(bool enable)
     }
 }
 
-void WebJoystickHandler::debugMovement(JoyCoords coords, String direction)
+void WebJoystickHandler::toggleCamLed(bool enable)
+{
+    if (enable)
+    {
+        this->_car.camLedOn();
+    }
+    else
+    {
+        this->_car.camLedOff();
+    }
+}
+
+void WebJoystickHandler::debugMovement(JoyCoords coords,
+                                       String direction)
 {
     if (!this->debug)
     {

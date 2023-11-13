@@ -5,7 +5,7 @@
 #include <JoyCoords.h>
 
 typedef std::function<void(JoyCoords coords)> CoordsHandlerFunction;
-typedef std::function<void(bool buttonToggle)> ButtonAToggleHandlerFunction;
+typedef std::function<void(bool buttonToggle)> ButtonToggleHandlerFunction;
 
 class SocketServer
 {
@@ -13,7 +13,8 @@ public:
     SocketServer();
 
     void init(CoordsHandlerFunction coordsHandler,
-              ButtonAToggleHandlerFunction buttonAHandler);
+              ButtonToggleHandlerFunction buttonAHandler,
+              ButtonToggleHandlerFunction buttonBHandler);
 
     void onEvent(uint8_t num,
                  WStype_t type,
@@ -27,10 +28,12 @@ public:
 private:
     WebSocketsServer webSocket;
     CoordsHandlerFunction _coordsHandler;
-    ButtonAToggleHandlerFunction _buttonAHandler;
+    ButtonToggleHandlerFunction _buttonAHandler;
+    ButtonToggleHandlerFunction _buttonBHandler;
     const char *ALIAS_DIRECTION;
     const char *ALIAS_SPEED;
     const char *ALIAS_BUTTON_A;
+    const char *ALIAS_BUTTON_B;
 };
 
 #endif

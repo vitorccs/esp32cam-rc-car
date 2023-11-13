@@ -15,8 +15,8 @@
 #define PIN_CAMERA_LED 4
 #define PIN_M1_IN1 14
 #define PIN_M1_IN2 15
-#define PIN_M2_IN1 13
-#define PIN_M2_IN2 12
+#define PIN_M2_IN1 12
+#define PIN_M2_IN2 13
 #define MIN_MOTOR_SPEED 80 // (between 0 to 255)
 
 // Car components

@@ -8,14 +8,13 @@ Remote Controlled Car using ESP32-CAM board (Ai Thinker).
 
 ## Description
 ![Esp32CamRcCar_v2_bb](https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/a4bcdd9c-a1f8-49e0-ada0-388ce839ec51)
+_Note: the Electrolytic Capacitor is used to prevent ESP32-CAM board from rebooting when DC Motors consume more current and cause a voltage drop in the circuit._
 
 This is a [Platform IO IDE](https://platformio.org/platformio-ide) project coded in C++. 
 
 The car is controlled by a Virtual Joystick in a Web page. The ESP32-CAM connects to your Wi-Fi network and provides a local IP where the Virtual Joystick can be found. To control your car remotelly with your public internet IP address, you need to set up Port Forwarding in your home router for ports 80 (Web page), 81 (video streaming) and 82 (web socket/joystick commands).
 
 <img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/ea42572a-f59b-4444-ae26-d2b4ac0d762e" width="300">
-
-Note: the Electrolytic Capacitor is used to prevent ESP32-CAM board from rebooting when DC Motors consume more current and cause a voltage drop in the circuit.
 
 ## Components
 * 01 - ESP32-CAM board

@@ -8,8 +8,8 @@
 #include <Car.h>
 
 // Replace with your network credentials
-#define WIFI_SSID "Athena"
-#define WIFI_PWD "washington"
+#define WIFI_SSID "YOUR_SSID"
+#define WIFI_PWD "YOUR_PWD"
 #define JOYSTICK_DEBUG true
 #define PIN_FRONT_LED 2
 #define PIN_CAMERA_LED 4

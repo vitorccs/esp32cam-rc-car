@@ -15,7 +15,7 @@ The car is controlled by a Virtual Joystick in a Web page. The ESP32-CAM connect
 
 <img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/ea42572a-f59b-4444-ae26-d2b4ac0d762e" width="300">
 
-Note: the Electrolytic Capacitor is used to prevent ESP32-CAM board from rebooting when DC Motors consume more current and causes a voltage drop.
+Note: the Electrolytic Capacitor is used to prevent ESP32-CAM board from rebooting when DC Motors consume more current and cause a voltage drop in the circuit.
 
 ## Components
 * 01 - ESP32-CAM board
@@ -161,7 +161,7 @@ https://www.robocore.net/robotica-robocore/plataforma-robotica-rocket-tank
 https://www.aliexpress.us/item/3256805855273192.html
 
 ### About the Power Supply
-I recommend to use high quality 18650 batteries (3,7V and 2200mAh). Their discharge rate must be at least 2C, so they can provide up to 4.4A the circuit.
+I recommend to use high quality 18650 batteries (3.7V and 2200mAh). Their discharge rate must be at least 2C, so they can provide up to 4.4A the circuit.
 
 The 4WD chassis requires a higher power supply, you may need to:
 + Add a second support of two 18650 batteries connected in parallel with the first support to increase the current in the circuit. [Difference between series and parallel](https://www.primaryconnections.org.au/themes/custom/connections/assets/SBR/data/Phy/sub/seriespara/seriespara.htm). 

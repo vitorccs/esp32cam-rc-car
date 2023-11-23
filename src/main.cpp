@@ -6,6 +6,7 @@
 #include <WebJoystickHandler.h>
 #include <JoyCoords.h>
 #include <Car.h>
+#include <sensor.h>
 
 // Replace with your network credentials
 #define WIFI_SSID "YOUR_SSID"
@@ -17,7 +18,9 @@
 #define PIN_M1_IN2 15
 #define PIN_M2_IN1 12
 #define PIN_M2_IN2 13
-#define MIN_MOTOR_SPEED 80 // (between 0 to 255)
+#define MIN_MOTOR_SPEED 80 // (0 to 255)
+#define FRAME_SIZE FRAMESIZE_VGA
+#define JPEG_QUALITY 15 // (0 to 63) lower means higher quality
 
 // Car components
 DCMotor motor1(PIN_M1_IN1, PIN_M1_IN2);
@@ -42,7 +45,7 @@ void setup()
   car.stop();
   car.setMinAbsSpeed(MIN_MOTOR_SPEED);
 
-  streamServer.init();
+  streamServer.init(FRAME_SIZE, JPEG_QUALITY);
 
   // Wi-Fi connection
   wifiHandler.connect(WIFI_SSID, WIFI_PWD);

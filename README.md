@@ -1,9 +1,9 @@
 # ESP32-CAM RC Car
 Remote Controlled Car using ESP32-CAM board (Ai Thinker). 
 
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/ea93eb14-db75-4947-816a-6857e98e9683" width="400">
+<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/c4210169-0d88-4f1c-a159-0541f533dd56" width="400">
 
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/18d12067-86c2-4741-ab28-3052b3bd9a21" width="400">
+<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/43eabcb8-0e50-4a8b-b5bc-8e9e2dd9ea60" width="400">
 
 
 ## Description
@@ -25,6 +25,7 @@ The car is controlled by a Virtual Joystick in a Web page. The ESP32-CAM connect
 * 02 - 18650 batteries (3.7v - 4.2v)
 * 01 - Battery support
 * 01 - Mini protoboard (170 holes) - using as board support
+* 01 - Antenna for ESP32-CAM board - improves video streaming and prevents lags
 
 ## About PlatformIO IDE
 Platform IO is a plugin for Microsoft Visual Studio Code. It is a more robust IDE compared to the official Arduino IDE. It also allows us to easily create our own private libraries and use a more object oriented code.
@@ -40,6 +41,7 @@ The PINs can be customized in the `main.cpp`
 #include <WebJoystickHandler.h>
 #include <JoyCoords.h>
 #include <Car.h>
+#include <sensor.h>
 
 // Replace with your network credentials
 #define WIFI_SSID "YOUR_SSID"
@@ -51,7 +53,9 @@ The PINs can be customized in the `main.cpp`
 #define PIN_M1_IN2 15
 #define PIN_M2_IN1 12
 #define PIN_M2_IN2 13
-#define MIN_MOTOR_SPEED 80 // (between 0 to 255)
+#define MIN_MOTOR_SPEED 80 // (0 to 255)
+#define FRAME_SIZE FRAMESIZE_VGA
+#define JPEG_QUALITY 15 // (0 to 63) lower means higher quality
 
 // Car components
 DCMotor motor1(PIN_M1_IN1, PIN_M1_IN2);
@@ -76,7 +80,7 @@ void setup()
   car.stop();
   car.setMinAbsSpeed(MIN_MOTOR_SPEED);
 
-  streamServer.init();
+  streamServer.init(FRAME_SIZE, JPEG_QUALITY);
 
   // Wi-Fi connection
   wifiHandler.connect(WIFI_SSID, WIFI_PWD);
@@ -112,6 +116,7 @@ void loop()
 {
   socketServer.loop();
 }
+
 ```
 
 Fine-tuning customizations can be done in the individual files like `DCMotor.h` for changing speed parameters

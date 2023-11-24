@@ -46,6 +46,7 @@ The PINs can be customized in the `main.cpp`
 // Replace with your network credentials
 #define WIFI_SSID "YOUR_SSID"
 #define WIFI_PWD "YOUR_PWD"
+#define WIFI_AP_MODE false // Access Point mode (no internet connection)
 #define JOYSTICK_DEBUG true
 #define PIN_FRONT_LED 2
 #define PIN_CAMERA_LED 4
@@ -55,7 +56,7 @@ The PINs can be customized in the `main.cpp`
 #define PIN_M2_IN2 13
 #define MIN_MOTOR_SPEED 80 // (0 to 255)
 #define FRAME_SIZE FRAMESIZE_VGA
-#define JPEG_QUALITY 15 // (0 to 63) lower means higher quality
+#define JPEG_QUALITY 25 // (0 to 63) lower means higher quality
 
 // Car components
 DCMotor motor1(PIN_M1_IN1, PIN_M1_IN2);
@@ -83,7 +84,14 @@ void setup()
   streamServer.init(FRAME_SIZE, JPEG_QUALITY);
 
   // Wi-Fi connection
-  wifiHandler.connect(WIFI_SSID, WIFI_PWD);
+  if (WIFI_AP_MODE)
+  {
+    wifiHandler.apMode(WIFI_SSID, WIFI_PWD);
+  }
+  else
+  {
+    wifiHandler.connect(WIFI_SSID, WIFI_PWD);
+  }
 
   // Start streaming web server
   streamServer.startStream();
@@ -116,7 +124,6 @@ void loop()
 {
   socketServer.loop();
 }
-
 ```
 
 Fine-tuning customizations can be done in the individual files like `DCMotor.h` for changing speed parameters

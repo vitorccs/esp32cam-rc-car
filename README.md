@@ -172,12 +172,11 @@ https://www.robocore.net/robotica-robocore/plataforma-robotica-rocket-tank
 https://www.aliexpress.us/item/3256805855273192.html
 
 ### About the Power Supply
-I recommend to use high quality 18650 batteries (3.7V and 2200mAh). Their discharge rate must be at least 2C, so they can provide up to 4.4A the circuit.
+I recommend to use high quality 18650 batteries (3.7v - 4.2v, 2200mAh, at least 2C of discharge rate).
 
-The 4WD chassis requires a higher power supply, you may need to:
-+ Add a second support of two 18650 batteries connected in parallel with the first support to increase the current in the circuit. [Difference between series and parallel](https://www.primaryconnections.org.au/themes/custom/connections/assets/SBR/data/Phy/sub/seriespara/seriespara.htm). 
-+ Use LiPo batteries instead, since they have great voltage (7 - 12V) and high discharge current (20 - 30C)
-+ You may provide a separate power supply for the ESP32-CAM board
+Most people prefer to use different power sources for ESP32-CAM (3.3v or 5v) and Bridge driver (6 - 35v).
+
+I preferred to have a single power source and thus a single power switch. However, it was required to use capacitors in order to prevent ESP32-CAM board from rebooting when the bridge drains too much power and also to filter the electric noise.
 
 ## Fritzing file
 The electronic schematic was created in the [Fritzing](https://fritzing.org/) software and can be downloaded at

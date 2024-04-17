@@ -1,20 +1,26 @@
 # ESP32-CAM RC Car
 Remote Controlled Car using ESP32-CAM board (Ai Thinker). 
 
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/c4210169-0d88-4f1c-a159-0541f533dd56" width="400">
+<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/f788569e-7ddf-4850-8b46-390ebf42fe5f" width="333">
+<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/a5ee5e95-c56e-49f8-bf31-3a6af53f03fd" width="333">
+<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/d9161e13-771a-4d22-a353-626ddc897c38" width="333">
 
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/43eabcb8-0e50-4a8b-b5bc-8e9e2dd9ea60" width="400">
+## Recording
+Note: enable the sound by clicking on the speaker icon from the video toolbar
+
+https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/8cfba1da-72c5-4ae2-b976-827cb1b7a7d5
 
 
 ## Description
-![Esp32CamRcCar_v2_bb](https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/a4bcdd9c-a1f8-49e0-ada0-388ce839ec51)
-_Note: the Electrolytic Capacitor is used to prevent ESP32-CAM board from rebooting when DC Motors consume more current and cause a voltage drop in the circuit._
+![Esp32CamRcCar_v3_bb](https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/7db53379-2ad7-48e1-b6bd-88771fdb20d5)
 
 This is a [Platform IO IDE](https://platformio.org/platformio-ide) project coded in C++. 
 
-The car is controlled by a Virtual Joystick in a Web page. The ESP32-CAM connects to your Wi-Fi network and provides a local IP where the Virtual Joystick can be found. To control your car remotelly with your public internet IP address, you need to set up Port Forwarding in your home router for ports 80 (Web page), 81 (video streaming) and 82 (web socket/joystick commands).
+The ESP32-CAM connects to your Wi-Fi network and provides a Web page containing a virtual joystick.
 
 <img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/ea42572a-f59b-4444-ae26-d2b4ac0d762e" width="300">
+
+_Note: In order to control your car remotelly from your public internet IP address, you need to set up Port Forwarding in your home router for ports 80 (Web page), 81 (video streaming) and 82 (web socket/joystick commands)._
 
 ## Components
 * 01 - ESP32-CAM board
@@ -22,10 +28,11 @@ The car is controlled by a Virtual Joystick in a Web page. The ESP32-CAM connect
 * 02 - DC Motors (3v - 6v)
 * 01 - L298N Dual H-Bridge board
 * 02 - White Leds
-* 02 - 18650 batteries (3.7v - 4.2v)
+* 03 - 18650 batteries (3.7v - 4.2v)
 * 01 - Battery support
-* 01 - Mini protoboard (170 holes) - using as board support
 * 01 - Antenna for ESP32-CAM board - improves video streaming and prevents lags
+
+_Note: in order to enable the external antenna, it is required to change resistor position in ESP32-CAM board [see tutorial](https://randomnerdtutorials.com/esp32-cam-connect-external-antenna/)._
 
 ## About PlatformIO IDE
 Platform IO is a plugin for Microsoft Visual Studio Code. It is a more robust IDE compared to the official Arduino IDE. It also allows us to easily create our own private libraries and use a more object oriented code.
@@ -156,15 +163,15 @@ private:
 ## About Car Chassis
 This project can work with a 2WD or 4WD car chassis like these ones:
 
-### Reference 1 (International):
-<img src="https://github.com/vitorccs/nodemcu-rc-car/assets/9891961/6e92b8e4-c452-4b1f-b8ce-b5e51e591bed" width="300">
-
-https://www.aliexpress.us/item/3256801542172576.html
-
-### Reference 2 (Brazil):
+### Reference 1 (Brazil):
 <img src="https://github.com/vitorccs/nodemcu-rc-car/assets/9891961/a79de4b0-ea64-42f6-b933-a801766820ab" width="300">
 
 https://www.robocore.net/robotica-robocore/plataforma-robotica-rocket-tank
+
+### Reference 2 (International):
+<img src="https://github.com/vitorccs/nodemcu-rc-car/assets/9891961/6e92b8e4-c452-4b1f-b8ce-b5e51e591bed" width="300">
+
+https://www.aliexpress.us/item/3256801542172576.html
 
 ### Reference 3 (International):
 <img src="https://github.com/vitorccs/nodemcu-rc-car/assets/9891961/ab262906-3d15-41b7-8fab-b9664d6263a4" width="300">
@@ -176,9 +183,9 @@ I recommend to use high quality 18650 batteries (3.7v - 4.2v, 2200mAh, at least 
 
 Most people prefer to use different power sources for ESP32-CAM (3.3v or 5v) and Bridge driver (6 - 35v).
 
-I preferred to have a single power source and thus a single power switch. However, it was required to use capacitors in order to prevent ESP32-CAM board from rebooting when the bridge drains too much power and also to filter the electric noise.
+I prefer to have a single power source and thus a single power switch. However, it is recommended to use capacitor to filter the electrical noise created by the bridge.
 
 ## Fritzing file
 The electronic schematic was created in the [Fritzing](https://fritzing.org/) software and can be downloaded at
-[Esp32CamRcCar_v2.zip](https://github.com/vitorccs/esp32cam-rc-car/files/13378547/Esp32CamRcCar_v2.zip)
+[Esp32CamRcCar_v3.zip](https://github.com/vitorccs/esp32cam-rc-car/files/15016644/Esp32CamRcCar_v3.zip)
 

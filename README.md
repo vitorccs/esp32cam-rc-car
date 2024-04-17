@@ -1,9 +1,9 @@
 # ESP32-CAM RC Car
 Remote Controlled Car using ESP32-CAM board (Ai Thinker). 
 
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/f788569e-7ddf-4850-8b46-390ebf42fe5f" width="333">
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/a5ee5e95-c56e-49f8-bf31-3a6af53f03fd" width="333">
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/d9161e13-771a-4d22-a353-626ddc897c38" width="333">
+<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/f788569e-7ddf-4850-8b46-390ebf42fe5f" width="272">
+<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/a5ee5e95-c56e-49f8-bf31-3a6af53f03fd" width="272">
+<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/d9161e13-771a-4d22-a353-626ddc897c38" width="272">
 
 ## Recording
 Note: enable the sound by clicking on the speaker icon from the video toolbar

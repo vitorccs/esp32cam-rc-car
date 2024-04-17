@@ -30,6 +30,7 @@ _Note: In order to control your car remotelly from your public internet IP addre
 * 02 - White Leds
 * 03 - 18650 batteries (3.7v - 4.2v)
 * 01 - Battery support
+* 01 - Electrolytic Capacitor 1000 μF (9v - 50v)
 * 01 - Antenna for ESP32-CAM board - improves video streaming and prevents lags
 
 _Note: in order to enable the external antenna, it is required to change resistor position in ESP32-CAM board [see tutorial](https://randomnerdtutorials.com/esp32-cam-connect-external-antenna/)._

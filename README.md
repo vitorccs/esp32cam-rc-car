@@ -12,7 +12,7 @@ https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/8cfba1da-72c5-4ae2-b9
 
 
 ## Description
-![Esp32CamRcCar_v3_bb](https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/7db53379-2ad7-48e1-b6bd-88771fdb20d5)
+![Esp32CamRcCar_v3_bb](https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/9302c2ef-7232-4740-ba98-85c38116f3ca)
 
 This is a [Platform IO IDE](https://platformio.org/platformio-ide) project coded in C++. 
 
@@ -30,7 +30,7 @@ _Note: In order to control your car remotelly from your public internet IP addre
 * 02 - White Leds
 * 03 - 18650 batteries (3.7v - 4.2v)
 * 01 - Battery support
-* 01 - Electrolytic Capacitor 1000 μF (9v - 50v)
+* 01 - Electrolytic Capacitor 1000 μF (16v - 50v)
 * 01 - Antenna for ESP32-CAM board - improves video streaming and prevents lags
 
 _Note: in order to enable the external antenna, it is required to change resistor position in ESP32-CAM board [see tutorial](https://randomnerdtutorials.com/esp32-cam-connect-external-antenna/)._
@@ -188,5 +188,4 @@ I prefer to have a single power source and thus a single power switch. However, 
 
 ## Fritzing file
 The electronic schematic was created in the [Fritzing](https://fritzing.org/) software and can be downloaded at
-[Esp32CamRcCar_v3.zip](https://github.com/vitorccs/esp32cam-rc-car/files/15016644/Esp32CamRcCar_v3.zip)
-
+[Esp32CamRcCar_v3.zip](https://github.com/vitorccs/esp32cam-rc-car/files/15016889/Esp32CamRcCar_v3.zip)

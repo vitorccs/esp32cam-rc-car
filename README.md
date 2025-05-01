@@ -23,7 +23,7 @@ The ESP32-CAM connects to your Wi-Fi network and provides a Web page containing 
 
 <img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/ea42572a-f59b-4444-ae26-d2b4ac0d762e" width="300">
 
-_Note: In order to control your car remotelly from your public internet IP address, you need to set up Port Forwarding in your home router for ports 80 (Web page), 81 (video streaming) and 82 (web socket/joystick commands)._
+_Note: In order to control your car remotely from your public internet IP address, you need to set up Port Forwarding in your home router for ports 80 (Web page), 81 (video streaming) and 82 (web socket/joystick commands)._
 
 ## Components
 * 01 - ESP32-CAM board
@@ -40,7 +40,7 @@ _Note: In order to control your car remotelly from your public internet IP addre
 _Note: in order to enable the external antenna, it is required to change resistor position in ESP32-CAM board [see tutorial](https://randomnerdtutorials.com/esp32-cam-connect-external-antenna/)._
 
 ## About PlatformIO IDE
-Platform IO is a plugin for Microsoft Visual Studio Code. It is a more robust IDE compared to the official Arduino IDE. It also allows us to easily create our own private libraries and use a more object oriented code.
+PlatformIO is a plugin for Microsoft Visual Studio Code. It is a more robust IDE compared to the official Arduino IDE. It also allows us to easily create our own private libraries and use a more object oriented code.
 
 ## About the code
 The PINs can be customized in the `main.cpp` 
@@ -138,7 +138,7 @@ void loop()
 }
 ```
 
-Fine-tuning customizations can be done in the individual files like `DCMotor.h` for changing speed parameters
+Fine-tuning customization can be done in the individual files like `DCMotor.h` for changing speed parameters
 ```c++
 #ifndef DCMOTOR_H
 #define DCMOTOR_H

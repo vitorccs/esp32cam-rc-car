@@ -1,18 +1,21 @@
 # ESP32-CAM RC Car
 Remote Controlled Car using ESP32-CAM board (Ai Thinker). 
 
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/f788569e-7ddf-4850-8b46-390ebf42fe5f" width="272">
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/a5ee5e95-c56e-49f8-bf31-3a6af53f03fd" width="272">
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/d9161e13-771a-4d22-a353-626ddc897c38" width="272">
+<img src="https://github.com/user-attachments/assets/ec22a4e1-2925-4fb7-b9bf-a37df63d4eb8" width="380">
+<img src="https://github.com/user-attachments/assets/d911967d-e4df-4131-a469-6d09c001c91d" width="380">
+<img src="https://github.com/user-attachments/assets/9c37acfe-ae61-46e8-ac19-afca65610c92" width="380">
+<img src="https://github.com/user-attachments/assets/7ff3bae6-3929-4e11-98ef-cb2d855ba641" width="380">
 
 ## Recording
 Note: enable the sound by clicking on the speaker icon from the video toolbar
 
-https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/8cfba1da-72c5-4ae2-b976-827cb1b7a7d5
+https://github.com/user-attachments/assets/16f1a4c5-d164-4bd8-8a95-21b05898c83b
+
+https://github.com/user-attachments/assets/695c0d93-d09e-49f0-810b-0f244609043a
 
 
 ## Description
-![Esp32CamRcCar_v3_bb](https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/9302c2ef-7232-4740-ba98-85c38116f3ca)
+![Image](https://github.com/user-attachments/assets/4778a96d-b3dc-4130-8555-dee16d9bb4db)
 
 This is a [Platform IO IDE](https://platformio.org/platformio-ide) project coded in C++. 
 
@@ -28,10 +31,11 @@ _Note: In order to control your car remotelly from your public internet IP addre
 * 02 - DC Motors (3v - 6v)
 * 01 - L298N Dual H-Bridge board
 * 02 - White Leds
-* 03 - 18650 batteries (3.7v - 4.2v)
+* 02 - 18650 batteries (3.7v - 4.2v)
 * 01 - Battery support
 * 01 - Electrolytic Capacitor 1000 μF (16v - 50v)
-* 01 - Antenna for ESP32-CAM board - improves video streaming and prevents lags
+* 01 - (Optional) Antenna for ESP32-CAM board - improves video streaming and prevents lags
+* 01 - (Optional) OV2640 ESP32 CAM (120 or 160 degree lens) - wide-angle capture
 
 _Note: in order to enable the external antenna, it is required to change resistor position in ESP32-CAM board [see tutorial](https://randomnerdtutorials.com/esp32-cam-connect-external-antenna/)._
 
@@ -182,10 +186,10 @@ https://www.aliexpress.us/item/3256805855273192.html
 ### About the Power Supply
 I recommend to use high quality 18650 batteries (3.7v - 4.2v, 2200mAh, at least 2C of discharge rate).
 
-Most people prefer to use different power sources for ESP32-CAM (3.3v or 5v) and Bridge driver (6 - 35v).
+Most people prefer to use different power sources for ESP32-CAM (3.3v or 5v) and Bridge driver (7.4 - 8.4v).
 
 I prefer to have a single power source and thus a single power switch. However, it is recommended to use capacitor to filter the electrical noise created by the bridge.
 
 ## Fritzing file
 The electronic schematic was created in the [Fritzing](https://fritzing.org/) software and can be downloaded at
-[Esp32CamRcCar_v3.zip](https://github.com/vitorccs/esp32cam-rc-car/files/15016889/Esp32CamRcCar_v3.zip)
+[Esp32CamRcCar_v3.zip](https://github.com/user-attachments/files/19996296/Esp32CamRcCar_v3.zip)

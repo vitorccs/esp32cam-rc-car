@@ -1,5 +1,8 @@
 # ESP32-CAM RC Car
-Remote Controlled Car using ESP32-CAM board (Ai Thinker). 
+Remote Controlled Car using ESP32-CAM board (Ai Thinker).
+
+Also published at:
+https://www.instructables.com/ESP32-CAM-RC-Car/
 
 <img src="https://github.com/user-attachments/assets/ec22a4e1-2925-4fb7-b9bf-a37df63d4eb8" width="380">
 <img src="https://github.com/user-attachments/assets/d911967d-e4df-4131-a469-6d09c001c91d" width="380">

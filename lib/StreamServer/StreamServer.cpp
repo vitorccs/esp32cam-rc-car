@@ -7,24 +7,7 @@
 #include <soc/soc.h>          // disable brownout problems
 #include <soc/rtc_cntl_reg.h> // disable brownout problems
 #include <StreamServer.h>
-
-//#define CAMERA_MODEL_WROVER_KIT
-//#define CAMERA_MODEL_ESP_EYE
-//#define CAMERA_MODEL_ESP32S3_EYE
-//#define CAMERA_MODEL_M5STACK_PSRAM
-//#define CAMERA_MODEL_M5STACK_V2_PSRAM
-//#define CAMERA_MODEL_M5STACK_WIDE
-//#define CAMERA_MODEL_M5STACK_ESP32CAM
-//#define CAMERA_MODEL_M5STACK_UNITCAM
-#define CAMERA_MODEL_AI_THINKER
-//#define CAMERA_MODEL_TTGO_T_JOURNAL
-//#define CAMERA_MODEL_XIAO_ESP32S3
-//#define CAMERA_MODEL_ESP32_CAM_BOARD
-//#define CAMERA_MODEL_ESP32S2_CAM_BOARD
-//#define CAMERA_MODEL_ESP32S3_CAM_LCD
-//#define CAMERA_MODEL_DFRobot_FireBeetle2_ESP32S3
-//#define CAMERA_MODEL_DFRobot_Romeo_ESP32S3
-
+#include <Config.h>
 #include <CameraPins.h>
 
 httpd_handle_t camera_httpd = NULL;
@@ -141,7 +124,7 @@ button.pressed {
 }
 
 .buttons button.pressed:nth-child(2) {
-    color: blue;
+    color: yellow;
 }
 
 
@@ -220,25 +203,50 @@ button.pressed {
         <div id="joystick-canvas"></div>
     </div>
     <div class="buttons">
-        <button type="button" id="button-a">LED</button>
-        <button type="button" id="button-b">Lights</button>
+        <button type="button" id="button-a">FLASH</button>
+        <button type="button" id="button-b">LEDs</button>
     </div>
 </section>
 
 <script>
+class Logger {
+    constructor(enable = true) {
+        this.enable = enable;
+    }
+
+    debug(strText) {
+        document.querySelector('.debug').innerHTML = strText;
+    }
+
+    fail(strText) {
+        this.debug(strText);
+        alert(strText);
+    }
+}
+
 class SocketClient {
-    constructor(port) {
+    constructor(port, logger) {
         this.port = port;
-        this.connection = new WebSocket(`ws://${window.location.hostname}:${port}`);
+        this.logger = logger;
+        this.url = `ws://${window.location.hostname}:${port}`;
+        this.connection = new WebSocket(this.url);
+        
         this.connection.onopen = () => this.onOpen();
         this.connection.onerror = (error) => this.onError(error);
     }
 
     send(params) {
-        const jsonString = JSON.stringify(params);
-        console.log(jsonString);
-        document.querySelector('.debug').innerHTML = jsonString;
-        this.connection.send(jsonString);
+        const jsonString = this.isReady()
+            ? JSON.stringify(params)
+            : null;
+
+        const debugMessage = jsonString || 'Socket is not ready';
+
+        if (jsonString !== null) {
+            this.connection.send(jsonString);
+        }
+        
+        this.logger.debug(debugMessage);
     }
 
     setOnMessage(handler) {
@@ -246,23 +254,32 @@ class SocketClient {
     }
 
     onOpen() {
-        console.log('WebSocket Connection at ' + window.location.hostname);
+        const message = `WebSocket Connection at ${this.url}`;
+        this.logger.debug(message);
+    }
+
+    isReady() {
+        return this.connection.readyState === WebSocket.OPEN;
     }
 
     onError(error) {
-        console.log('WebSocket Error ' + error);
-        alert('WebSocket Error #' + error);
+        console.log(error);
+        const message = `WebSocket Error ${error} at ${this.url}`;
+        this.logger.fail(message);
     }
 }
 
 class MessageHandler {
-    constructor(socketClient) {
+    constructor(socketClient, logger) {
         this.socketClient = socketClient
+        this.logger = logger;
+
         this.socketClient.setOnMessage(this.handle);
     }
 
     handle(e) {
-        console.log('Message received: ' + e.data);
+        const message = `Message received: ${e.data}`;
+        this.logger.debug(message);
     }
 }
 
@@ -370,7 +387,10 @@ class VideoStream {
   }
 
   getUrl() {
-    return window.location.href.slice(0, -1) + ":" + this.port + "/stream";
+    const url = new URL(window.location.href);
+    url.port = this.port;
+    url.pathname = '/stream';
+    return url.toString();
   }
 
   init() {
@@ -379,8 +399,12 @@ class VideoStream {
 }
 
 window.addEventListener('load', () => {
-    const socketClient = new SocketClient(82);
-    const messageHandler = new MessageHandler(socketClient);
+    const streamPort = 8001;
+    const websocketPort = 8002;
+
+    const logger = new Logger(true);
+    const socketClient = new SocketClient(websocketPort, logger);
+    const messageHandler = new MessageHandler(socketClient, logger);
     const joystick = new JoyStick('joystick-canvas', {
         'internalFillColor': '#444',
         'internalStrokeColor': '#222',
@@ -394,7 +418,7 @@ window.addEventListener('load', () => {
     );
     const videoStream = new VideoStream(
       '#stream',
-      81
+      streamPort
     );
 });
 </script>
@@ -430,6 +454,8 @@ void StreamServer::init(framesize_t frameSize,
     config.pin_reset = RESET_GPIO_NUM;
     config.xclk_freq_hz = 20000000;
     config.pixel_format = PIXFORMAT_JPEG;
+    // config.grab_mode = CAMERA_GRAB_LATEST;
+    // config.fb_location = CAMERA_FB_IN_PSRAM;
     config.frame_size = frameSize;
     config.jpeg_quality = jpegQuality;
     config.fb_count = 1;
@@ -536,7 +562,7 @@ void StreamServer::startStream()
 {
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
 
-    config.server_port = 80;
+    config.server_port = 8000;
 
     httpd_uri_t index_uri = {
         .uri = "/",
@@ -544,19 +570,19 @@ void StreamServer::startStream()
         .handler = StreamServer::index_handler,
         .user_ctx = NULL};
 
-    httpd_uri_t stream_uri = {
-        .uri = "/stream",
-        .method = HTTP_GET,
-        .handler = StreamServer::stream_handler,
-        .user_ctx = NULL};
-
     if (httpd_start(&camera_httpd, &config) == ESP_OK)
     {
         httpd_register_uri_handler(camera_httpd, &index_uri);
     }
 
-    config.server_port += 1;
+    config.server_port = 8001;
     config.ctrl_port += 1;
+
+    httpd_uri_t stream_uri = {
+        .uri = "/stream",
+        .method = HTTP_GET,
+        .handler = StreamServer::stream_handler,
+        .user_ctx = NULL};
 
     if (httpd_start(&stream_httpd, &config) == ESP_OK)
     {

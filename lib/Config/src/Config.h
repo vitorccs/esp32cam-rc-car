@@ -27,8 +27,8 @@
 // NOTE: Higher quality affect stream FPS
 #define JPEG_QUALITY 25
 
-// Enable debug
-#define JOYSTICK_DEBUG true
+// Enable debug (prints car speed and direction in the serial)
+#define JOYSTICK_DEBUG false
 
 // Set camera model
 #define CAMERA_MODEL_AI_THINKER

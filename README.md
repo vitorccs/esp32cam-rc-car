@@ -1,5 +1,5 @@
 # ESP32-CAM RC Car
-Remote Controlled Car using ESP32-CAM board (Ai Thinker).
+Remote-controlled car using ESP32-CAM board (Ai Thinker).
 
 Also published at:
 https://www.instructables.com/ESP32-CAM-RC-Car/
@@ -20,9 +20,13 @@ https://github.com/user-attachments/assets/695c0d93-d09e-49f0-810b-0f244609043a
 ## Description
 Build a Wi-Fi-controlled surveillance car using an ESP32-CAM board. 
 
-The car is controlled by a Web page containing a virtual joystick. 
+The car is controlled by a Web page containing a virtual joystick.
 
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/ea42572a-f59b-4444-ae26-d2b4ac0d762e" width="300">
+<img width="300" src="https://github.com/user-attachments/assets/0c0fc0e3-b696-42f6-bae1-b432512325a1" />
+
+You can also control the car with a Keyboard. Activate it by pressing the *Enter* key at any time, and press it again to switch back to the virtual joystick. Use the W, A, S, D or arrow keys, along with (L)ed and (F)lash.
+
+<img width="900" src="https://github.com/user-attachments/assets/b2f910d6-1ad3-48d7-b75a-4b1d420e2f14" />
 
 If you are familiar with configuring internet routers and setting port forwarding, you can also control your car remotely!
 1) Ensure you assign a static IP.
@@ -33,21 +37,20 @@ If you are familiar with configuring internet routers and setting port forwardin
 3) If your ISP changes your public IP frequently, set up a DDNS service (e.g., No-IP)
 
 ## Improvements in version v1.1.0
-+ Changed ports range from 80-82 to 8000-80002
-  
-  *Prevents the unsiderable behaviour of some Web browsers which automatically redirects HTTP (80) to HTTPS (443). Also, most ISPs (Internet Service Provider) block the 80 port.*
+**1) IMPORTANT: Updated port range (8000–8002)**\
+*The Web page is now served on port 8000 (!). This change avoids the undesirable behavior of some browsers which usually redirect HTTP to HTTPS. Also, port 80 is usually blocked by many ISP (Internet Service Providers).*
 
-+ Placed all project customization to `Config/src/Config.h`
-  
-  *Easier to customize project without accidentally changing the source code.*
+**2) IMPORTANT: Assigned a different PIN to the 2nd LED**\
+*Distributes current and avoids exceeding GPIO limits.*
 
-+ Assigned a different GPIO to the 2nd LED so the total current is split 
-  
-  *Prevents to reach the GPIO current limit*
+**3) Keyboard control support**\
+*Perfect for desktop use.*
 
-+ Updated README with instructions about a DRV8833 project version
+**4) Centralized configuration `Config/src/Config.h`**\
+*Simplifies customization without modifying core source files*
 
-  *A more power-efficient and higher speed version of the project*
+**5) README updated with DRV8833 version**\
+*Includes instructions for a more efficient, higher-speed setup.*
 
 ## Schematics
 
@@ -56,7 +59,7 @@ I recommend starting with this project because it is easier and quicker to build
 
 <img src="https://github.com/user-attachments/assets/76a8762d-ec05-48bb-81ab-8f1a1016342f" />
 
-### Option 2 - More complex to build (uses DRB8833 bridge)
+### Option 2 - More complex to build (uses DRV8833 bridge)
 If you want to upgrade to a more energy-efficient project with motors that reach higher speeds, and you also have more time and experience with soldering.
 
 The DRV8833 uses modern MOSFET transistor and drops around **0.2-0.4v**, while the L298N is based on older bipolar transistor technology and drops around **2-4 V**. This means more voltage reaches the motor, resulting in better performance, less heat, and improved battery efficiency.
@@ -86,7 +89,11 @@ The DRV8833 uses modern MOSFET transistor and drops around **0.2-0.4v**, while t
 _Note: in order to enable the external antenna, it is required to change resistor position in ESP32-CAM board [see tutorial](https://randomnerdtutorials.com/esp32-cam-connect-external-antenna/)._
 
 ## About PlatformIO IDE
-PlatformIO is a plugin for Microsoft Visual Studio Code. It is a more robust IDE compared to the official Arduino IDE. It also allows us to easily create our own private libraries and use a more object oriented code.
+<img width="110" src="https://github.com/user-attachments/assets/9f92d4e1-022f-43d1-85e7-297b0b146c29" />
+
+This project was created on "Visual Studio Code" with "PlatformIO" plugin.
+
+Compared to the official Arduino IDE, this setup offers better dependency management, multi-environment (board) support, and a project structure that promotes modular and object-oriented code.
 
 ## About the code
 The PINs can be customized in the `Config/src/Config.h` 
@@ -120,7 +127,7 @@ The PINs can be customized in the `Config/src/Config.h`
 // NOTE: Higher quality affect stream FPS
 #define JPEG_QUALITY 25
 
-// Enable debug
+// Enable debug (prints car speed and direction in the serial)
 #define JOYSTICK_DEBUG true
 
 // Set camera model
@@ -180,5 +187,5 @@ Most people prefer to use different power sources for ESP32-CAM (3.3v or 5v) and
 I prefer to have a single power source and thus a single power switch. However, it is recommended to use capacitor to filter the electrical noise created by the bridge.
 
 ## Fritzing file
-The eletronic schematic was created in the [Fritzing](https://fritzing.org/) software and can be downloaded at
+The electronic schematic was created in the [Fritzing](https://fritzing.org/) software and can be downloaded at
 * [esp32cam-rc-car-v4.zip](https://github.com/user-attachments/files/25831553/esp32cam-rc-car-v4.zip)

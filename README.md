@@ -57,14 +57,14 @@ If you are familiar with configuring internet routers and setting port forwardin
 ### Option 1 - Easier to build (uses L298N bridge)
 I recommend starting with this project because it is easier and quicker to build, and you car will work perfectly well.
 
-<img src="https://github.com/user-attachments/assets/76a8762d-ec05-48bb-81ab-8f1a1016342f" />
+<img src="https://github.com/user-attachments/assets/00bf02a2-f532-4919-b316-aa8897cc705c" />
 
 ### Option 2 - More complex to build (uses DRV8833 bridge)
 If you want to upgrade to a more energy-efficient project with motors that reach higher speeds, and you also have more time and experience with soldering.
 
 The DRV8833 uses modern MOSFET transistor and drops around **0.2-0.4v**, while the L298N is based on older bipolar transistor technology and drops around **2-4 V**. This means more voltage reaches the motor, resulting in better performance, less heat, and improved battery efficiency.
 
-<img src="https://github.com/user-attachments/assets/06f11c5d-3a95-4e8c-bf1e-cf66719f1314" />
+<img src="https://github.com/user-attachments/assets/bc55e3c7-4e3f-489b-ad77-a56580440f33" />
 
 ## Components
 * 01 - ESP32-CAM board
@@ -188,4 +188,4 @@ I prefer to have a single power source and thus a single power switch. However, 
 
 ## Fritzing file
 The electronic schematic was created in the [Fritzing](https://fritzing.org/) software and can be downloaded at
-* [esp32cam-rc-car-v4.zip](https://github.com/user-attachments/files/25831553/esp32cam-rc-car-v4.zip)
+* [esp32cam-rc-car-v4.zip](https://github.com/user-attachments/files/26199608/esp32cam-rc-car-v4.zip)

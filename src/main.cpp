@@ -7,28 +7,15 @@
 #include <JoyCoords.h>
 #include <Car.h>
 #include <sensor.h>
-
-// Replace with your network credentials
-#define WIFI_SSID "ESP32_CAR"
-#define WIFI_PWD "supercar"
-#define WIFI_AP_MODE true // Access Point mode (no internet connection)
-#define JOYSTICK_DEBUG true
-#define PIN_FRONT_LED 2
-#define PIN_CAMERA_LED 4
-#define PIN_M1_IN1 14
-#define PIN_M1_IN2 15
-#define PIN_M2_IN1 12
-#define PIN_M2_IN2 13
-#define MIN_MOTOR_SPEED 80 // (0 to 255)
-#define FRAME_SIZE FRAMESIZE_VGA
-#define JPEG_QUALITY 25 // (0 to 63) lower means higher quality
+#include <Config.h>
 
 // Car components
 DCMotor motor1(PIN_M1_IN1, PIN_M1_IN2);
 DCMotor motor2(PIN_M2_IN1, PIN_M2_IN2);
-DigitalLed frontLed(PIN_FRONT_LED);
+DigitalLed frontLed1(PIN_FRONT_LED_1);
+DigitalLed frontLed2(PIN_FRONT_LED_2);
 DigitalLed camLed(PIN_CAMERA_LED);
-Car car(motor1, motor2, frontLed, camLed);
+Car car(motor1, motor2, frontLed1, frontLed2, camLed);
 
 // Handlers
 WifiHandler wifiHandler;

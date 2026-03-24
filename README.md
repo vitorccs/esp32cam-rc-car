@@ -1,5 +1,5 @@
 # ESP32-CAM RC Car
-Remote Controlled Car using ESP32-CAM board (Ai Thinker).
+Remote-controlled car using ESP32-CAM board (Ai Thinker).
 
 Also published at:
 https://www.instructables.com/ESP32-CAM-RC-Car/
@@ -10,7 +10,7 @@ https://www.instructables.com/ESP32-CAM-RC-Car/
 <img src="https://github.com/user-attachments/assets/7ff3bae6-3929-4e11-98ef-cb2d855ba641" width="380">
 
 ## Recording
-Note: enable the sound by clicking on the speaker icon from the video toolbar
+Note: enable the sound by clicking on the speaker icon from the video toolbar.
 
 https://github.com/user-attachments/assets/16f1a4c5-d164-4bd8-8a95-21b05898c83b
 
@@ -18,127 +18,120 @@ https://github.com/user-attachments/assets/695c0d93-d09e-49f0-810b-0f244609043a
 
 
 ## Description
-![Image](https://github.com/user-attachments/assets/4778a96d-b3dc-4130-8555-dee16d9bb4db)
+Build a Wi-Fi-controlled surveillance car using an ESP32-CAM board. 
 
-This is a [Platform IO IDE](https://platformio.org/platformio-ide) project coded in C++. 
+The car is controlled by a Web page containing a virtual joystick.
 
-The ESP32-CAM connects to your Wi-Fi network and provides a Web page containing a virtual joystick.
+<img width="300" src="https://github.com/user-attachments/assets/0c0fc0e3-b696-42f6-bae1-b432512325a1" />
 
-<img src="https://github.com/vitorccs/esp32cam-rc-car/assets/9891961/ea42572a-f59b-4444-ae26-d2b4ac0d762e" width="300">
+You can also control the car with a Keyboard. Activate it by pressing the *Enter* key at any time, and press it again to switch back to the virtual joystick. Use the W, A, S, D or arrow keys, along with (L)ed and (F)lash.
 
-_Note: In order to control your car remotely from your public internet IP address, you need to set up Port Forwarding in your home router for ports 80 (Web page), 81 (video streaming) and 82 (web socket/joystick commands)._
+<img width="900" src="https://github.com/user-attachments/assets/b2f910d6-1ad3-48d7-b75a-4b1d420e2f14" />
+
+If you are familiar with configuring internet routers and setting port forwarding, you can also control your car remotely!
+1) Ensure you assign a static IP.
+2) Set up the following port forwarding rules:
+* 8000 (web page)
+* 8001 (video streaming)
+* 8002 (WebSocket / joystick commands).
+3) If your ISP changes your public IP frequently, set up a DDNS service (e.g., No-IP)
+
+## Improvements in version v1.1.0
+**1) IMPORTANT: Updated port range (8000–8002)**\
+*The Web page is now served on port 8000 (!). This change avoids the undesirable behavior of some browsers which usually redirect HTTP to HTTPS. Also, port 80 is usually blocked by many ISP (Internet Service Providers).*
+
+**2) IMPORTANT: Assigned a different PIN to the 2nd LED**\
+*Distributes current and avoids exceeding GPIO limits.*
+
+**3) Keyboard control support**\
+*Perfect for desktop use.*
+
+**4) Centralized configuration `Config/src/Config.h`**\
+*Simplifies customization without modifying core source files*
+
+**5) README updated with DRV8833 version**\
+*Includes instructions for a more efficient, higher-speed setup.*
+
+## Schematics
+
+### Option 1 - Easier to build (uses L298N bridge)
+I recommend starting with this project because it is easier and quicker to build, and you car will work perfectly well.
+
+<img src="https://github.com/user-attachments/assets/76a8762d-ec05-48bb-81ab-8f1a1016342f" />
+
+### Option 2 - More complex to build (uses DRV8833 bridge)
+If you want to upgrade to a more energy-efficient project with motors that reach higher speeds, and you also have more time and experience with soldering.
+
+The DRV8833 uses modern MOSFET transistor and drops around **0.2-0.4v**, while the L298N is based on older bipolar transistor technology and drops around **2-4 V**. This means more voltage reaches the motor, resulting in better performance, less heat, and improved battery efficiency.
+
+<img src="https://github.com/user-attachments/assets/06f11c5d-3a95-4e8c-bf1e-cf66719f1314" />
 
 ## Components
 * 01 - ESP32-CAM board
 * 01 - Car Chassis (2WD or 4WD)
 * 02 - DC Motors (3v - 6v)
-* 01 - L298N Dual H-Bridge board
 * 02 - White Leds
 * 02 - 18650 batteries (3.7v - 4.2v)
 * 01 - Battery support
-* 01 - Electrolytic Capacitor 1000 μF (16v - 50v)
 * 01 - (Optional) Antenna for ESP32-CAM board - improves video streaming and prevents lags
 * 01 - (Optional) OV2640 ESP32 CAM (120 or 160 degree lens) - wide-angle capture
+
+### Option 1 (L298N)
+* 01 - L298N Dual H-Bridge board
+* 01 - 1000 μF capacitor
+
+### Option 2 (DRV8833)
+* 01 - DRV8833 Dual H-Bridge board
+* 01 - L2596 Bulk Converter
+* 02 - 1000 μF capacitor
+* 01 - 100 nF capacitor
 
 _Note: in order to enable the external antenna, it is required to change resistor position in ESP32-CAM board [see tutorial](https://randomnerdtutorials.com/esp32-cam-connect-external-antenna/)._
 
 ## About PlatformIO IDE
-PlatformIO is a plugin for Microsoft Visual Studio Code. It is a more robust IDE compared to the official Arduino IDE. It also allows us to easily create our own private libraries and use a more object oriented code.
+<img width="110" src="https://github.com/user-attachments/assets/9f92d4e1-022f-43d1-85e7-297b0b146c29" />
+
+This project was created on "Visual Studio Code" with "PlatformIO" plugin.
+
+Compared to the official Arduino IDE, this setup offers better dependency management, multi-environment (board) support, and a project structure that promotes modular and object-oriented code.
 
 ## About the code
-The PINs can be customized in the `main.cpp` 
+The PINs can be customized in the `Config/src/Config.h` 
 ```c++
-#include <Arduino.h>
-#include <WifiHandler.h>
-#include <StreamServer.h>
-#include <SocketServer.h>
-#include <DCMotor.h>
-#include <WebJoystickHandler.h>
-#include <JoyCoords.h>
-#include <Car.h>
-#include <sensor.h>
-
-// Replace with your network credentials
+// WiFi credentials
 #define WIFI_SSID "YOUR_SSID"
 #define WIFI_PWD "YOUR_PWD"
-#define WIFI_AP_MODE false // Access Point mode (no internet connection)
-#define JOYSTICK_DEBUG true
-#define PIN_FRONT_LED 2
+
+// Access Point mode 
+// + true = creates a WiFi network without internet connection
+// + false = connect to an existing WiFi with internet connection
+#define WIFI_AP_MODE false
+
+// Customize PINS
+#define PIN_FRONT_LED_1 2
+#define PIN_FRONT_LED_2 3
 #define PIN_CAMERA_LED 4
 #define PIN_M1_IN1 14
 #define PIN_M1_IN2 15
 #define PIN_M2_IN1 12
 #define PIN_M2_IN2 13
-#define MIN_MOTOR_SPEED 80 // (0 to 255)
-#define FRAME_SIZE FRAMESIZE_VGA
-#define JPEG_QUALITY 25 // (0 to 63) lower means higher quality
 
-// Car components
-DCMotor motor1(PIN_M1_IN1, PIN_M1_IN2);
-DCMotor motor2(PIN_M2_IN1, PIN_M2_IN2);
-DigitalLed frontLed(PIN_FRONT_LED);
-DigitalLed camLed(PIN_CAMERA_LED);
-Car car(motor1, motor2, frontLed, camLed);
+// Set minimum motor speed (0 to 255)
+#define MIN_MOTOR_SPEED 80
 
-// Handlers
-WifiHandler wifiHandler;
-WebJoystickHandler webJoystickHandler(car);
+// Set JPEG resolution 
+// NOTE: higher resolutions affect stream FPS
+#define FRAME_SIZE FRAMESIZE_SVGA
 
-// Stream and Socket servers
-StreamServer streamServer = StreamServer();
-SocketServer socketServer = SocketServer();
+// Set JPEG quality (0 to 63 - lower means higher quality)
+// NOTE: Higher quality affect stream FPS
+#define JPEG_QUALITY 25
 
-void setup()
-{
-  Serial.begin(115200);
-  Serial.setDebugOutput(false);
+// Enable debug (prints car speed and direction in the serial)
+#define JOYSTICK_DEBUG true
 
-  car.stop();
-  car.setMinAbsSpeed(MIN_MOTOR_SPEED);
-
-  streamServer.init(FRAME_SIZE, JPEG_QUALITY);
-
-  // Wi-Fi connection
-  if (WIFI_AP_MODE)
-  {
-    wifiHandler.apMode(WIFI_SSID, WIFI_PWD);
-  }
-  else
-  {
-    wifiHandler.connect(WIFI_SSID, WIFI_PWD);
-  }
-
-  // Start streaming web server
-  streamServer.startStream();
-
-  // Set Web Joystick (Web sockets)
-  webJoystickHandler.setDebug(JOYSTICK_DEBUG);
-
-  // Start Web Sockets
-  CoordsHandlerFunction coordsHandler = [&](JoyCoords coords)
-  {
-    webJoystickHandler.handle(coords);
-  };
-
-  ButtonToggleHandlerFunction buttonAHandler = [&](bool toggle)
-  {
-    webJoystickHandler.toggleCamLed(toggle);
-  };
-
-  ButtonToggleHandlerFunction buttonBHandler = [&](bool toggle)
-  {
-    webJoystickHandler.toggleFrontLights(toggle);
-  };
-
-  socketServer.init(coordsHandler,
-                    buttonAHandler,
-                    buttonBHandler);
-}
-
-void loop()
-{
-  socketServer.loop();
-}
+// Set camera model
+#define CAMERA_MODEL_AI_THINKER
 ```
 
 Fine-tuning customization can be done in the individual files like `DCMotor.h` for changing speed parameters
@@ -195,4 +188,4 @@ I prefer to have a single power source and thus a single power switch. However, 
 
 ## Fritzing file
 The electronic schematic was created in the [Fritzing](https://fritzing.org/) software and can be downloaded at
-[Esp32CamRcCar_v3.zip](https://github.com/user-attachments/files/19996296/Esp32CamRcCar_v3.zip)
+* [esp32cam-rc-car-v4.zip](https://github.com/user-attachments/files/25831553/esp32cam-rc-car-v4.zip)

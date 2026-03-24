@@ -9,7 +9,8 @@ class Car
 public:
     Car(DCMotor &m1,
         DCMotor &m2,
-        DigitalLed &fLed,
+        DigitalLed &fLed1,
+        DigitalLed &fLed2,
         DigitalLed &camLed);
     void backward(uint8_t speed = 100);
     void backwardLeft(uint8_t speed = 100);
@@ -30,7 +31,8 @@ public:
 private:
     DCMotor motor1;
     DCMotor motor2;
-    DigitalLed frontLed;
+    DigitalLed frontLed1;
+    DigitalLed frontLed2;
     DigitalLed cameraLed;
 };
 #endif

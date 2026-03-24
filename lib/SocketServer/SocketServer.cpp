@@ -3,7 +3,7 @@
 #include <WebSocketsServer.h>
 #include <ArduinoJson.h>
 
-SocketServer::SocketServer() : webSocket(82)
+SocketServer::SocketServer() : webSocket(8002)
 {
     ALIAS_BUTTON_A = "button-a";
     ALIAS_BUTTON_B = "button-b";
